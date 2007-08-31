@@ -16,7 +16,9 @@ Keyboard::setEventCallback(keyListener)
     SV * keyListener
   CODE:
     poisKeyListener.setPerlObject(keyListener);
+    THIS->setEventCallback(&poisKeyListener);
 
+## hmm, not sure why you would want to get this...
 KeyListener *
 Keyboard::getEventCallback()
 

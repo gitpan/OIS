@@ -12,7 +12,9 @@ JoyStick::setEventCallback(joyListener)
     SV * joyListener
   CODE:
     poisJoyStickListener.setPerlObject(joyListener);
+    THIS->setEventCallback(&poisJoyStickListener);
 
+## hmm, not sure why you would want to get this...
 JoyStickListener *
 JoyStick::getEventCallback()
 

@@ -2,6 +2,10 @@
 #define _PERLOIS_KEYLISTENER_H_
 
 #include "perlOIS.h"
+#include <map>
+#include <string>
+
+using namespace std;
 
 // this class implements OIS::KeyListener,
 // so it can be passed to Keyboard->setEventCallback,
@@ -21,9 +25,14 @@ class PerlOISKeyListener : public OIS::KeyListener
     bool keyReleased(const OIS::KeyEvent &evt);
 
  private:
-    bool callPerlCallback(const char *cbmeth, const OIS::KeyEvent &evt);
+    bool perlCallbackCan(string const &cbmeth);
+    void setCans();
+    bool callPerlCallback(string const &cbmeth, const OIS::KeyEvent &evt);
 
     SV * mPerlObj;
+
+    typedef map<string, bool> CanMap;
+    CanMap mCanMap;
 };
 
 

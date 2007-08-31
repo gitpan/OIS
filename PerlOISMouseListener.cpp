@@ -3,7 +3,7 @@
 // class implementing OIS::MouseListener interface,
 // but using Perl callbacks
 
-PerlOISMouseListener::PerlOISMouseListener() : mPerlObj((SV *) NULL)
+PerlOISMouseListener::PerlOISMouseListener() : mPerlObj((SV *)NULL)
 {
 }
 
@@ -12,6 +12,7 @@ PerlOISMouseListener::~PerlOISMouseListener()
     if (mPerlObj != (SV *)NULL && SvREFCNT(mPerlObj)) {
         SvREFCNT_dec(mPerlObj);
     }
+    mCanMap.clear();
 }
 
 bool PerlOISMouseListener::mouseMoved(const OIS::MouseEvent &evt)
@@ -32,72 +33,102 @@ bool PerlOISMouseListener::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseB
 
 void PerlOISMouseListener::setPerlObject(SV *pobj)
 {
-    // xxx: is this right?
     if (pobj != (SV *)NULL && sv_isobject(pobj)) {
         // copy the SV *
         if (mPerlObj == (SV *)NULL) {
             // first time, create new SV *
             mPerlObj = newSVsv(pobj);
         } else {
-            // just overwrite the SV *
+            // just overwrite existing SV *
             SvSetSV(mPerlObj, pobj);
         }
     } else {
-        warn("Argument wasn't an object, so MouseListener wasn't set.\n");
+        croak("Argument wasn't an object, so MouseListener wasn't set.\n");
     }
+
+    setCans();
 }
 
-bool PerlOISMouseListener::callPerlCallback(const char *cbmeth, const OIS::MouseEvent &evt, int buttonID)
+void PerlOISMouseListener::setCans()
 {
+    mCanMap["mouseMoved"] = perlCallbackCan("mouseMoved");
+    mCanMap["mousePressed"] = perlCallbackCan("mousePressed");
+    mCanMap["mouseReleased"] = perlCallbackCan("mouseReleased");
+}
+
+// check whether the Perl object has a callback method implemented
+// (is there a perl API method or something easier than this?)
+bool PerlOISMouseListener::perlCallbackCan(string const &cbmeth)
+{
+    int count;
+    SV *methret;
+    bool can;
+
+    dSP;
+
+    ENTER;
+    SAVETMPS;
+
+    // call `can' to see if they implemented the callback
+    PUSHMARK(SP);
+    XPUSHs(mPerlObj);
+    XPUSHs(sv_2mortal(newSVpv(cbmeth.c_str(), 0)));
+    PUTBACK;
+
+    count = call_method("can", G_SCALAR);
+    SPAGAIN;
+    if (count != 1) {
+        croak("can (%s) didn't return a single value?", cbmeth.c_str());
+    }
+
+    methret = POPs;
+    PUTBACK;
+
+    can = SvTRUE(methret);
+
+    FREETMPS;
+    LEAVE;
+
+    return can;
+}
+
+bool PerlOISMouseListener::callPerlCallback(string const &cbmeth, const OIS::MouseEvent &evt, int buttonID)
+{
+    int count;
+    SV *methret;
     bool retval = true;   // default to returning true
 
-    if (mPerlObj != (SV *)NULL && sv_isobject(mPerlObj)) {
+    if (! (mCanMap[cbmeth] == true)) {
+        // method not implemented, just return true
+        return retval;
+    }
+
+    if (mPerlObj != (SV *)NULL) {
         // see `perldoc perlcall`
         dSP;
-
-        int count;
-        SV *mouseevt, *methret;
-
-        TMOIS_OUT(mouseevt, &evt, MouseEvent);  // put C++ object into Perl
 
         ENTER;
         SAVETMPS;
 
-        // call `can' to see if they implemented the callback
+        SV *mouseevt = sv_newmortal();
+        TMOIS_OUT(mouseevt, &evt, MouseEvent);  // put C++ object into Perl
+
         PUSHMARK(SP);
         XPUSHs(mPerlObj);
-        XPUSHs(sv_2mortal(newSVpv(cbmeth, strlen(cbmeth))));
+        XPUSHs(mouseevt);
+        XPUSHs(sv_2mortal(newSViv(buttonID)));
         PUTBACK;
 
-        count = call_method("can", G_SCALAR);
+        count = call_method(cbmeth.c_str(), G_SCALAR);
         SPAGAIN;
         if (count != 1) {
-            croak("can didn't return a single value?");
+            croak("Callbacks must return a single (boolean) value");
         }
 
         methret = POPs;
         PUTBACK;
 
-        if (SvTRUE(methret)) {
-            // call the callback
-            PUSHMARK(SP);
-            XPUSHs(mPerlObj);
-            XPUSHs(sv_2mortal(mouseevt));
-            XPUSHs(sv_2mortal(newSViv(buttonID)));
-            PUTBACK;
-
-            // finally
-            count = call_method(cbmeth, G_SCALAR);
-            SPAGAIN;
-            if (count != 1) {
-                croak("Callbacks must return a single (boolean) value");
-            }
-
-            methret = POPs;
-            PUTBACK;
-
-            retval = SvTRUE(methret) ? true : false;
-        }
+        retval = SvTRUE(methret) ? true : false;
 
         FREETMPS;
         LEAVE;

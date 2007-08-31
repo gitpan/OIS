@@ -1,2 +1,6 @@
+0.02  2007-08-30
+- fixed setEventCallback for Keyboard, Mouse, and JoyStick classes,
+  along with the PerlOIS*Listener classes
+
 0.01  2007-08-28
 - first release

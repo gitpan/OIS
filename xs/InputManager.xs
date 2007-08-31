@@ -43,7 +43,7 @@ InputManager::createInputObjectJoyStick(bufferMode)
     catch (const OIS::Exception &e) {
         // XXX: not sure if this actually works....
         SV *errsv = get_sv("@", TRUE);
-        SV *exception_object;
+        SV *exception_object = sv_newmortal();
         TMOIS_OUT(exception_object, &e, Exception);
         sv_setsv(errsv, exception_object);
         croak(Nullch);
@@ -61,7 +61,7 @@ InputManager::createInputObjectKeyboard(bufferMode)
     catch (const OIS::Exception &e) {
         // XXX: not sure if this actually works....
         SV *errsv = get_sv("@", TRUE);
-        SV *exception_object;
+        SV *exception_object = sv_newmortal();
         TMOIS_OUT(exception_object, &e, Exception);
         sv_setsv(errsv, exception_object);
         croak(Nullch);
@@ -79,7 +79,7 @@ InputManager::createInputObjectMouse(bufferMode)
     catch (const OIS::Exception &e) {
         // XXX: not sure if this actually works....
         SV *errsv = get_sv("@", TRUE);
-        SV *exception_object;
+        SV *exception_object = sv_newmortal();
         TMOIS_OUT(exception_object, &e, Exception);
         sv_setsv(errsv, exception_object);
         croak(Nullch);

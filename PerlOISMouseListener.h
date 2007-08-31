@@ -2,6 +2,11 @@
 #define _PERLOIS_MOUSELISTENER_H_
 
 #include "perlOIS.h"
+#include <map>
+#include <string>
+
+using namespace std;
+
 
 // this class implements OIS::MouseListener,
 // so it can be passed to Mouse->setEventCallback,
@@ -22,9 +27,14 @@ class PerlOISMouseListener : public OIS::MouseListener
     bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
 
  private:
-    bool callPerlCallback(const char *cbmeth, const OIS::MouseEvent &evt, int id);
+    bool perlCallbackCan(string const &cbmeth);
+    void setCans();
+    bool callPerlCallback(string const &cbmeth, const OIS::MouseEvent &evt, int id);
 
     SV * mPerlObj;
+
+    typedef map<string, bool> CanMap;
+    CanMap mCanMap;
 };
 
 

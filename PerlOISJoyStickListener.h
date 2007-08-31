@@ -2,6 +2,10 @@
 #define _PERLOIS_JOYSTICKLISTENER_H_
 
 #include "perlOIS.h"
+#include <map>
+#include <string>
+
+using namespace std;
 
 // this class implements OIS::JoyStickListener,
 // so it can be passed to JoyStick->setEventCallback,
@@ -24,9 +28,14 @@ class PerlOISJoyStickListener : public OIS::JoyStickListener
     bool povMoved(const OIS::JoyStickEvent &evt, int pov);
 
  private:
-    bool callPerlCallback(const char *cbmeth, const OIS::JoyStickEvent &evt, int thingID);
+    bool perlCallbackCan(string const &cbmeth);
+    void setCans();
+    bool callPerlCallback(string const &cbmeth, const OIS::JoyStickEvent &evt, int id);
 
     SV * mPerlObj;
+
+    typedef map<string, bool> CanMap;
+    CanMap mCanMap;
 };
 
 

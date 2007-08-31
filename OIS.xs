@@ -5,7 +5,8 @@
 #include "PerlOISKeyListener.h"
 #include "PerlOISMouseListener.h"
 
-// these instances just sit around until needed by setEventCallback
+// These instances just sit around until needed by setEventCallback.
+// OIS only allows one listener each, so this should be okay I think.
 PerlOISJoyStickListener poisJoyStickListener;
 PerlOISKeyListener poisKeyListener;
 PerlOISMouseListener poisMouseListener;

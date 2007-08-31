@@ -12,7 +12,9 @@ Mouse::setEventCallback(mouseListener)
     SV * mouseListener
   CODE:
     poisMouseListener.setPerlObject(mouseListener);
+    THIS->setEventCallback(&poisMouseListener);
 
+## hmm, not sure why you would want to get this...
 MouseListener *
 Mouse::getEventCallback()
 
