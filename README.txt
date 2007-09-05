@@ -1,22 +1,25 @@
-Perl-OIS version 0.01
+Perl-OIS version 0.03
 =====================
 
-This is a Perl binding for OIS, a crossplatform C++ input framework,
-found at  . I made it so that Ogre () can be useful, but there might
-be uses outside of Ogre.
+This is a Perl binding for OIS, Object-Oriented Input System,
+a crossplatform C++ input framework, found at
+http://sourceforge.net/projects/wgois . I made it so that
+Ogre (http://search.cpan.org/~slanning/Ogre/ ) can be useful,
+but there might be uses outside of Ogre.
 
 The wrapping is currently fairly complete, but I'm focusing on being
 able to use it with Ogre. (OIS::Component and OIS::ForceEffect, and their
 subclasses are basically the only parts not wrapped.)
 
 There is no documentation yet, which is no doubt frustrating.
-There will probably be examples in the Ogre module, and you can look at
-the tests under the t/ directory.
+Then again, OIS itself isn't really very documented. :)
+There are examples in the Ogre module, and you can look at
+the (inadequate) tests under the t/ directory.
 
 
 DEPENDENCIES
 
-You should install the latest version of OIS. That is 1.0 as I'm writing this.
+You should install the latest version of OIS. That's 1.0 as I'm writing this.
 If you run Ubuntu, see below for installation instructions.
 
 Makefile.PL uses pkg-config to get information about the libraries and header

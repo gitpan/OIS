@@ -22,6 +22,19 @@ MouseState::height()
   OUTPUT:
     RETVAL
 
+## setWidth and setHeight are special for Perl
+void
+MouseState::setWidth(width)
+    int  width
+  CODE:
+    (*THIS).width = width;
+
+void
+MouseState::setHeight(height)
+    int  height
+  CODE:
+    (*THIS).height = height;
+
 int
 MouseState::buttons()
   CODE:
@@ -29,10 +42,23 @@ MouseState::buttons()
   OUTPUT:
     RETVAL
 
-## Dunno what "Axis" means for a mouse,
-## so these are unwrapped (let me know).
-## (for that matter, I dunno what width and height mean
-## for a mouse, either)
-## Axis X
-## Axis Y
-## Axis Z
+Axis *
+MouseState::X()
+  CODE:
+    RETVAL = &((*THIS).X);
+  OUTPUT:
+    RETVAL
+
+Axis *
+MouseState::Y()
+  CODE:
+    RETVAL = &((*THIS).Y);
+  OUTPUT:
+    RETVAL
+
+Axis *
+MouseState::Z()
+  CODE:
+    RETVAL = &((*THIS).Z);
+  OUTPUT:
+    RETVAL

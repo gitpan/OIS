@@ -20,12 +20,11 @@ Mouse::getEventCallback()
 
 MouseState *
 Mouse::getMouseState()
-  PREINIT:
-    MouseState state;
   CODE:
-    // xxx: I doubt this works...
-    state = THIS->getMouseState();
-    RETVAL = &state;
+    // xxx: is this right??
+    MouseState *state = new MouseState;
+    *state = THIS->getMouseState();
+    RETVAL = state;
   OUTPUT:
     RETVAL
 

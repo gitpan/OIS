@@ -16,6 +16,7 @@ PerlOISKeyListener.cpp
 PerlOISMouseListener.h
 PerlOISMouseListener.cpp
 
+xs/Axis.xs
 xs/EventArg.xs
 xs/Exception.xs
 xs/InputManager.xs
@@ -32,6 +33,7 @@ xs/MouseListener.xs
 xs/MouseState.xs
 xs/Object.xs
 
+OIS/Axis.pm
 OIS/EventArg.pm
 OIS/Exception.pm
 OIS/InputManager.pm

@@ -1,3 +1,7 @@
+0.03  2007-09-02
+- KeyEvent, MouseEvent wrapped
+- MouseEvent no longer segfaults (I think)
+
 0.02  2007-08-30
 - fixed setEventCallback for Keyboard, Mouse, and JoyStick classes,
   along with the PerlOIS*Listener classes

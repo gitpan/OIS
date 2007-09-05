@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 # use all files under OIS/ - probably not a good idea
+use OIS::Axis;
 use OIS::EventArg;
 use OIS::Exception;
 use OIS::InputManager;
@@ -26,7 +27,7 @@ require Exporter;
 require DynaLoader;
 our @ISA = qw(Exporter DynaLoader);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub dl_load_flags { $^O eq 'darwin' ? 0x00 : 0x01 }
 
