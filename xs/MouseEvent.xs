@@ -2,12 +2,12 @@ MODULE = OIS     PACKAGE = OIS::MouseEvent
 
 ## These are "public attributes", not methods.
 
-MouseState *
+const MouseState *
 MouseEvent::state()
   CODE:
-    // xxx: I doubt this works...
-    MouseState *state = new MouseState;
-    *state = (*THIS).state;
-    RETVAL = state;
+    // MouseState *state = new MouseState;
+    // *state = THIS->state;
+    // RETVAL = state;
+    RETVAL = &(THIS->state);
   OUTPUT:
     RETVAL

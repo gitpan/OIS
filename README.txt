@@ -1,4 +1,4 @@
-Perl-OIS version 0.03
+Perl-OIS version 0.04
 =====================
 
 This is a Perl binding for OIS, Object-Oriented Input System,

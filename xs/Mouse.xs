@@ -18,13 +18,14 @@ Mouse::setEventCallback(mouseListener)
 MouseListener *
 Mouse::getEventCallback()
 
-MouseState *
+const MouseState *
 Mouse::getMouseState()
   CODE:
-    // xxx: is this right??
-    MouseState *state = new MouseState;
-    *state = THIS->getMouseState();
-    RETVAL = state;
+    // MouseState *state = new MouseState;
+    // *state = THIS->getMouseState();
+    // RETVAL = state;
+    // This is how you do it?!?
+    RETVAL = &(THIS->getMouseState());
   OUTPUT:
     RETVAL
 

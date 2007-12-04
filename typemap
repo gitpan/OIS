@@ -1,6 +1,7 @@
 TYPEMAP
 
 Axis *	O_AXIS
+const Axis *	O_AXIS
 EventArg *	O_EVENTARG
 Exception *	O_EXCEPTION
 InputManager *	O_INPUTMANAGER
@@ -15,6 +16,7 @@ Mouse *	O_MOUSE
 MouseEvent *	O_MOUSEEVENT
 MouseListener *	O_MOUSELISTENER
 MouseState *	O_MOUSESTATE
+const MouseState *	O_MOUSESTATE
 Object *	O_OBJECT
 
 string	STRING

@@ -11,14 +11,14 @@ MouseState::buttonDown(button)
 int
 MouseState::width()
   CODE:
-    RETVAL = (*THIS).width;
+    RETVAL = THIS->width;
   OUTPUT:
     RETVAL
 
 int
 MouseState::height()
   CODE:
-    RETVAL = (*THIS).height;
+    RETVAL = THIS->height;
   OUTPUT:
     RETVAL
 
@@ -27,38 +27,38 @@ void
 MouseState::setWidth(width)
     int  width
   CODE:
-    (*THIS).width = width;
+    THIS->width = width;
 
 void
 MouseState::setHeight(height)
     int  height
   CODE:
-    (*THIS).height = height;
+    THIS->height = height;
 
 int
 MouseState::buttons()
   CODE:
-    RETVAL = (*THIS).buttons;
+    RETVAL = THIS->buttons;
   OUTPUT:
     RETVAL
 
 Axis *
 MouseState::X()
   CODE:
-    RETVAL = &((*THIS).X);
+    RETVAL = &(THIS->X);
   OUTPUT:
     RETVAL
 
 Axis *
 MouseState::Y()
   CODE:
-    RETVAL = &((*THIS).Y);
+    RETVAL = &(THIS->Y);
   OUTPUT:
     RETVAL
 
 Axis *
 MouseState::Z()
   CODE:
-    RETVAL = &((*THIS).Z);
+    RETVAL = &(THIS->Z);
   OUTPUT:
     RETVAL

@@ -1,3 +1,8 @@
+0.04  2007-12-04
+- fixed MouseState (I was doing "new MouseState", which meant that
+  any time you set width or height it wouldn't actually affect
+  the MouseState of the Mouse object itself...)
+
 0.03  2007-09-02
 - KeyEvent, MouseEvent wrapped
 - MouseEvent no longer segfaults (I think)
