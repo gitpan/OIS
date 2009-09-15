@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 3;
 
 BEGIN {
     use_ok('OIS');
@@ -12,8 +12,11 @@ BEGIN {
 
 
 # pretty lame tests, but these methods are useless anyway
+
 like(OIS::InputManager->getVersionNumber(), qr/^\d+$/, 'check getVersionNumber');
-like(OIS::InputManager->getVersionName(), qr/^.+$/, 'check getVersionName');
+
+## the API changed here...
+#like(OIS::InputManager->getVersionName(), qr/^.+$/, 'check getVersionName');
 
 
 # XXX: I don't know how to test createInputSystem and destroyInputSystem

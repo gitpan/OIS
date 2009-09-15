@@ -1,13 +1,14 @@
 #include "perlOIS.h"
 #include <string>
 
-#include "PerlOISJoyStickListener.h"
+// #include "PerlOISJoyStickListener.h"
 #include "PerlOISKeyListener.h"
 #include "PerlOISMouseListener.h"
 
 // These instances just sit around until needed by setEventCallback.
 // OIS only allows one listener each, so this should be okay I think.
-PerlOISJoyStickListener poisJoyStickListener;
+
+//PerlOISJoyStickListener poisJoyStickListener;
 PerlOISKeyListener poisKeyListener;
 PerlOISMouseListener poisMouseListener;
 
@@ -47,6 +48,7 @@ OIS::OIS_Unknown()
     OIS::OIS_Axis = 2
     OIS::OIS_Slider = 3
     OIS::OIS_POV = 4
+    OIS::OIS_Vector3 = 5
   CODE:
     switch (ix) {
         case 0: RETVAL = OIS::OIS_Unknown; break;
@@ -54,6 +56,7 @@ OIS::OIS_Unknown()
         case 2: RETVAL = OIS::OIS_Axis; break;
         case 3: RETVAL = OIS::OIS_Slider; break;
         case 4: RETVAL = OIS::OIS_POV; break;
+        case 5: RETVAL = OIS::OIS_Vector3; break;
     }
   OUTPUT:
     RETVAL

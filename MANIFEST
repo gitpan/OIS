@@ -20,10 +20,10 @@ xs/Axis.xs
 xs/EventArg.xs
 xs/Exception.xs
 xs/InputManager.xs
-xs/JoyStick.xs
-xs/JoyStickEvent.xs
-xs/JoyStickListener.xs
-xs/JoyStickState.xs
+xs/JoyStick.xs-disabled
+xs/JoyStickEvent.xs-disabled
+xs/JoyStickListener.xs-disabled
+xs/JoyStickState.xs-disabled
 xs/Keyboard.xs
 xs/KeyEvent.xs
 xs/KeyListener.xs
