@@ -2,7 +2,7 @@ use ExtUtils::MakeMaker;
 use strict;
 use warnings;
 
-my $MIN_OIS_VERSION = '1.2.0';
+my $MIN_OIS_VERSION = '1.3.0';
 
 main();
 exit 0;
@@ -23,6 +23,9 @@ sub fixed_args {
         'VERSION_FROM'  => "$pkg.pm",
         'ABSTRACT_FROM' => "$pkg.pm",
         'AUTHOR'        => 'Scott Lanning <slanning@cpan.org>',
+        'BUILD_REQUIRES' => {
+            'ExtUtils::ParseXS' => '2.2206',    # INCLUDE_COMMAND
+        },
         'CC'            => $ENV{'CXX'} || 'g++',
         'LD'            => '$(CC)',
         'OBJECT'        => '$(O_FILES)',
@@ -44,7 +47,9 @@ sub gpp_warn_args {
             chomp $str;
             my ($v, $s) = split /\./, $str;
             if (($v == 4 && $s >= 2) || $v > 4) {
-                return {'CCFLAGS' => '-Wno-write-strings'};
+                # http://www.nntp.perl.org/group/perl.perl5.porters/2012/03/msg184347.html
+                my $ccflags = $Config::Config{ccflags} || '';
+                return {'CCFLAGS' => "-Wno-write-strings $ccflags"};
             }
         }
     }

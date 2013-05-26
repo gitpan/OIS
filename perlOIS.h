@@ -1,7 +1,7 @@
 #ifndef _PERLOIS_H_
 #define _PERLOIS_H_
 
-#include <OIS/OIS.h>
+#include <OIS.h>
 
 
 // for C++
